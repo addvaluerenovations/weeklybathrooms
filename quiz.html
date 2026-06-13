@@ -494,7 +494,15 @@ function renderDone(lead){
     </div>`;
 }
 
-render();
+/* deep link: ?tier=N jumps straight to that package's result + booking form */
+const _tierParam = parseInt(new URLSearchParams(location.search).get('tier'), 10);
+if (TIERS[_tierParam]) {
+  resultTier = _tierParam;
+  manualPick = true;
+  renderResult();
+} else {
+  render();
+}
 </script>
 </body>
 </html>
