@@ -31,6 +31,8 @@ Any static host works (GitHub Pages, Netlify, Cloudflare Pages). For GitHub Page
 ## Notes / TODO
 
 - Tier prices in `quiz.html` (the `TIERS` object) and `index.html` are **indicative placeholders** pending QS sign-off.
+- The quiz refines each tier's "from" price into an **estimate range** from a few scoping questions (size, layout, condition, extras). The multipliers/add-ons live in the `SCOPE` array and `SPREAD` object in `quiz.html` and are **placeholders — tune them with the QS** before relying on the numbers.
+- Choosing a package on the home page deep-links to `quiz.html?tier=N`, which skips the matching questions and goes straight to the scoping step for a tailored estimate.
 - The lead forms in `quiz.html` and `contact.html` currently log the lead to the console and show a confirmation — wire both to a backend / Make.com webhook to capture live leads.
 - Opening hours in `contact.html` (Mon–Fri 7am–5pm, Sat by appointment) are placeholders — confirm before going live.
 - Gallery photos are labelled by suburb/type, not client name.
