@@ -11,6 +11,7 @@ Backed by Add Value Renovations Ltd (Registered Master Builder, LBP).
 | `index.html` | Home — positioning, the 4 week-tiers, how it works, FAQ |
 | `quiz.html` | "Which week is your bathroom?" — 30-second quiz with instant indicative pricing → book a site check |
 | `gallery.html` | Our bathrooms — filterable photo gallery with lightbox |
+| `contact.html` | Contact — call/email/visit details, enquiry form, opening hours, and map |
 | `wb-gallery-photos/` | Optimised gallery images (real Add Value Renovations projects) |
 
 Static site — plain HTML/CSS/JS, no build step. Fonts load from Google Fonts; everything else is self-contained.
@@ -30,7 +31,8 @@ Any static host works (GitHub Pages, Netlify, Cloudflare Pages). For GitHub Page
 ## Notes / TODO
 
 - Tier prices in `quiz.html` (the `TIERS` object) and `index.html` are **indicative placeholders** pending QS sign-off.
-- The quiz booking form currently logs the lead to the console and shows a confirmation — wire it to a backend / Make.com webhook to capture live leads.
+- The lead forms in `quiz.html` and `contact.html` currently log the lead to the console and show a confirmation — wire both to a backend / Make.com webhook to capture live leads.
+- Opening hours in `contact.html` (Mon–Fri 7am–5pm, Sat by appointment) are placeholders — confirm before going live.
 - Gallery photos are labelled by suburb/type, not client name.
 
 © Add Value Renovations Ltd · NZBN 9429041370285
