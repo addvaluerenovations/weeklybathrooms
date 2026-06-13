@@ -431,7 +431,7 @@ function renderResult(){
         ${t.incl.map(i=>`<li>${svg('check',16)}<span>${i}</span></li>`).join('')}
       </div>
 
-      <div class="switch">Not quite right? <button id="seeall">Pick a different week</button></div>
+      <div class="switch">Not quite right? <button id="seeall">Pick a different week</button> · <button id="retake">Take the full quiz</button></div>
       <div class="pill-row" id="pills" hidden>
         ${others.map(x=>`<button class="pill" data-t="${x}">Week ${x} · ${TIERS[x].name} · from ${money(TIERS[x].from)}</button>`).join('')}
       </div>
@@ -457,6 +457,12 @@ function renderResult(){
   // toggle alternate tiers
   document.getElementById('seeall').onclick=()=>{
     const p=document.getElementById('pills'); p.hidden=!p.hidden;
+  };
+  document.getElementById('retake').onclick=()=>{
+    step=0; answers.fill(null); resultTier=null; manualPick=false;
+    history.replaceState(null,'',location.pathname);  // drop ?tier= so a refresh won't jump back
+    render();
+    window.scrollTo({top:0,behavior:'smooth'});
   };
   document.querySelectorAll('.pill').forEach(b=>{
     b.onclick=()=>{ resultTier=+b.dataset.t; manualPick=true; renderResult(); window.scrollTo({top:0,behavior:'smooth'}); };
