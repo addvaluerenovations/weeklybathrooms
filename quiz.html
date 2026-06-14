@@ -150,6 +150,8 @@
   .recap .chip{display:inline-flex;align-items:center;gap:5px;font-size:.8rem;font-weight:600;background:var(--cream);border:1px solid var(--line);color:var(--ink-soft);border-radius:100px;padding:6px 12px}
   .recap .chip svg{color:var(--aqua-deep);flex:0 0 auto}
   .scope-foot{margin-top:18px;display:flex;justify-content:flex-end}
+  .skip{background:none;border:none;color:var(--ink-soft);font-family:var(--body);font-weight:600;font-size:.92rem;cursor:pointer;padding:8px 4px;transition:color .18s}
+  .skip:hover{color:var(--aqua-deep)}
   .opt .tick{margin-left:auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;color:#fff;flex:0 0 auto;transition:background .15s,border-color .15s}
   .opt.sel .tick{background:var(--aqua);border-color:var(--aqua)}
 
@@ -486,6 +488,7 @@ function renderRoute(){
 
 /* ---- scoping questions (refine the price) ---- */
 function gotoResult(){ phase='result'; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+function scopeNext(){ if(si<SCOPE.length-1){ si++; render(); } else gotoResult(); }
 
 function renderScope(){
   const item = SCOPE[si];
@@ -527,7 +530,7 @@ function renderScope(){
         cont.textContent = arr.length ? 'See my estimate →' : 'Skip — see my estimate →';
       };
     });
-    document.getElementById('cont').onclick=()=>{ if(si<SCOPE.length-1){si++;render();} else gotoResult(); };
+    document.getElementById('cont').onclick=scopeNext;
     return;
   }
 
@@ -544,15 +547,17 @@ function renderScope(){
             <span><b>${o.t}</b><small>${o.s}</small></span>
           </button>`).join('')}
       </div>
+      <div class="scope-foot"><button class="skip" id="skip">Skip this question →</button></div>
     </div>`;
   requestAnimationFrame(()=>{document.getElementById('fill').style.width=Math.round(cur/tot*100)+'%'});
   document.getElementById('back').onclick=scopeBack;
+  document.getElementById('skip').onclick=()=>{ scopeAns[si]=null; scopeNext(); };
   document.querySelectorAll('.opt').forEach(b=>{
     b.onclick=()=>{
       scopeAns[si]=+b.dataset.i;
       document.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
       b.classList.add('sel');
-      setTimeout(()=>{ if(si<SCOPE.length-1){si++;render();} else gotoResult(); },230);
+      setTimeout(scopeNext,230);
     };
   });
 }
