@@ -34,8 +34,7 @@ Any static host works (GitHub Pages, Netlify, Cloudflare Pages). For GitHub Page
 - The quiz refines each tier's "from" price into an **estimate range** from a few scoping questions (size, layout, condition, extras). The multipliers/add-ons live in the `SCOPE` array and `SPREAD` object in `quiz.html` and are **placeholders — tune them with the QS** before relying on the numbers.
 - Choosing a package on the home page deep-links to `quiz.html?tier=N`, which skips the matching questions and goes straight to the scoping step for a tailored estimate.
 - **The quiz gates the estimate behind a contact form**: the customer enters name/phone/email, the full quote (package, estimate range, their answers) is emailed to the team, and only then is the estimate revealed on screen.
-- **To receive those emails, set `LEAD.endpoint` in `quiz.html`** (top of the `<script>`). It accepts a Make.com webhook URL, a Formspree form URL, or Web3Forms (`https://api.web3forms.com/submit` + `LEAD.accessKey`). While blank, the form still works and just logs the lead to the browser console — no email is sent.
-- `contact.html`'s enquiry form still only logs to the console — point it at the same endpoint when ready.
+- **Email delivery is via [Web3Forms](https://web3forms.com)** (free plan — browser submissions only). Both `quiz.html` (`LEAD.accessKey`) and `contact.html` (`WEB3FORMS_KEY`) post to `https://api.web3forms.com/submit` with the same access key; quiz leads use the subject "New Weekly Bathrooms quote enquiry", contact leads use "New Weekly Bathrooms contact enquiry". To use separate keys/inboxes, just replace the key in each file. Note: Web3Forms rejects server-side test posts on the free plan — verify by submitting the live form in a browser.
 - Opening hours in `contact.html` (Mon–Fri 7am–5pm, Sat by appointment) are placeholders — confirm before going live.
 - Gallery photos are labelled by suburb/type, not client name.
 

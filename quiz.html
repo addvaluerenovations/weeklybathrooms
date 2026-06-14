@@ -405,8 +405,8 @@ function money(n){return '$'+n.toLocaleString('en-NZ')}
    Leave `endpoint` blank and it simply logs to the console (the form still works,
    so the site is never broken while this is being wired up).                     */
 const LEAD = {
-  endpoint:  "",     // <-- paste your Make.com webhook / Formspree / Web3Forms URL here
-  accessKey: "",     // <-- Web3Forms ONLY: paste your access key (otherwise leave blank)
+  endpoint:  "https://api.web3forms.com/submit",      // Web3Forms (free plan: browser submissions only)
+  accessKey: "39ef640b-9600-44fe-ae1a-ffc4a9c76199",  // shared with contact.html — swap for a dedicated key if preferred
   subject:   "New Weekly Bathrooms quote enquiry"
 };
 
