@@ -352,8 +352,10 @@
 
   /* contact form */
   function svgCheck(sz){return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'}
+  // Web3Forms access key — emails enquiries to the team's registered inbox
+  const WEB3FORMS_KEY = '39ef640b-9600-44fe-ae1a-ffc4a9c76199';
   const form=document.getElementById('contactForm');
-  form.onsubmit=(e)=>{
+  form.onsubmit=async (e)=>{
     e.preventDefault();
     const f=e.target;
     const name=f.name.value.trim(), phone=f.phone.value.trim(), email=f.email.value.trim(),
@@ -362,9 +364,23 @@
     [['name',name],['phone',phone]].forEach(([id,v])=>{ const el=f[id]; if(!v){el.classList.add('err');ok=false;} else el.classList.remove('err'); });
     if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){f.email.classList.add('err');ok=false;} else f.email.classList.remove('err');
     if(!ok){ f.querySelector('.err').focus(); return; }
-    // TODO: wire to backend / Make.com webhook / email. For now, capture + confirm.
+
     const lead={ name, phone, email, suburb, tier:tier||'Not sure yet', message, source:'contact-page' };
     console.log('WEEKLY BATHROOMS CONTACT →', lead);
+    const btn=f.querySelector('button[type=submit]'); if(btn){ btn.disabled=true; btn.textContent='Sending…'; }
+    try{
+      await fetch('https://api.web3forms.com/submit',{
+        method:'POST',
+        headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: 'New Weekly Bathrooms contact enquiry',
+          name, phone, email: email||'—', suburb: suburb||'—',
+          package: lead.tier, message: message||'—', source: lead.source
+        })
+      });
+    }catch(err){ console.error('Send failed:', err); }   // never block the customer's confirmation
+
     document.getElementById('formInner').innerHTML =
       '<div class="done">'+
         '<div class="check">'+svgCheck(38)+'</div>'+
